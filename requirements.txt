@@ -1,0 +1,14 @@
+torch==1.10.1
+torchaudio===0.10.1
+numpy
+tqdm
+
+unidecode
+wget
+
+librosa
+pyworld
+sklearn
+
+hparams
+inflect
