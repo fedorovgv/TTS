@@ -5,7 +5,7 @@
 
 ### Instalation
 
-This includes downloading LJSpeech, Mel Specs, Aligments, downloading pip libraries, creating normalized pitches and energies, WaveGlow checkpoint.
+This includes downloading LJSpeech, Mel Specs, Aligments, downloading pip libraries, creating normalized pitches and energies, WaveGlow checkpoint, pre trained model checkpoint.
 
 ```bash
 python setup.py
@@ -21,6 +21,8 @@ All data for train available in `/dataset` directory:
 6. pitches - calculated pithes 
 7. pitches_norm - normalized pitches (by standart scaler)
 8. train.txt - LJSpeech transcript
+
+Model checkpoint will be available in `./model/test/` folder. 
 
 --- 
 
@@ -52,6 +54,8 @@ Additional command line arguments:
 
 ```bash
 python test.py \
-   --speed 1.0 \
+   --a 1.0 \
+   --b 1.0 \
+   --g 1.0 \
    --model-path ./model_ckpt/model.ckpt 
 ```
