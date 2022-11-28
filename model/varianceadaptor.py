@@ -173,19 +173,22 @@ class LengthRegulator(nn.Module):
     def LR(x, duration, max_len=None):
         
         def _expand(item, item_durations):
-            out = list()
+            expanded_frames = list()
+            total_duration: int = 0
             for i, frame in enumerate(item):
-                expanded_size = max(int(item_durations[i].item()), 0)
-                out.append(frame.expand(expanded_size, -1))
-            return torch.cat(out, 0), int(item_durations.sum().item())
+                frame_duration = max(int(item_durations[i].item()), 0)
+                total_duration += frame_duration
+                expanded_frames.append(frame.expand(frame_duration, -1))
+            expanded = torch.cat(expanded_frames, 0)
+            return expanded, total_duration
 
         expanded_batch = list()
         mel_len = list()
 
         for item, item_durations in zip(x, duration):
-            expanded, expanded_size = _expand(item, item_durations)
+            expanded, dur = _expand(item, item_durations)
             expanded_batch.append(expanded)
-            mel_len.append(expanded_size)
+            mel_len.append(dur)
         
         expanded_batch = pad_2D_tensor(expanded_batch, max_len)
         
